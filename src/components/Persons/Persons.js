@@ -6,6 +6,7 @@ class Persons extends Component {
     return this.props.persons.map((person, index) => {
       return <Person
         key={person.id}
+        pos={index}
         click={() => this.props.clicked(index)}
         name={person.name}
         age={person.age}
