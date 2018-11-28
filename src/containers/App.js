@@ -4,19 +4,22 @@ import withClass from '../hoc/withClass'
 import Persons from '../components/Persons/Persons';
 import classes from './App.module.css';
 
+export const AuthContext = React.createContext(false)
+
 class App extends Component {
   constructor(props) {
     super(props)
     console.log('[App.js] inside constructor', props)
-    this.state = {
-      persons: [
-        { id: 'ad8', name: 'Mike', age: 27 },
-        { id: 'fw7', name: 'Catherine', age: 28 },
-        { id: 's3q', name: 'Nathan', age: 43 }
-      ],
-      showPersons: false,
-      toggleClicked: 0
-  }
+      this.state = {
+        persons: [
+          { id: 'ad8', name: 'Mike', age: 27 },
+          { id: 'fw7', name: 'Catherine', age: 28 },
+          { id: 's3q', name: 'Nathan', age: 43 }
+        ],
+        showPersons: false,
+        toggleClicked: 0,
+        authenticated: false
+    }
   }
   
 
@@ -52,6 +55,31 @@ class App extends Component {
     })
   }
 
+  loginHandler = () => {
+    this.setState({ authenticated: true })
+  }
+
+  // static method is not attatched to a single instance
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   console.log(
+  //     "[UPDATE App.js] Inside getDerivedStateFromProps",
+  //     nextProps,
+  //     prevState
+  //   )
+
+  //   return prevState
+  // }
+
+  // getSnapshotBeforeUpdate() {
+  //   console.log("[UPDATE App.js] Inside getSnapshotBeforeUpdate")
+  //    return null
+  // }
+
+  // componentDidUpdate() {
+  //       console.log("[UPDATE App.js] Inside componentDidUpdate")
+
+  // }
+
   render() {
 
     let persons = null
@@ -71,8 +99,12 @@ class App extends Component {
           clicked={this.togglePersonHandler}
           showPersons={this.state.showPersons}
           persons={this.state.persons}
+          login={this.loginHandler}
         />
-        {persons}
+        <AuthContext.Provider value={this.state.authenticated}>
+          {persons}
+        </AuthContext.Provider>
+        
         </>
         
     );

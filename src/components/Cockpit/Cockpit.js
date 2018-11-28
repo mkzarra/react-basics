@@ -21,8 +21,10 @@ const cockpit = props => {
     <p className={assignedClasses.join(' ')} >This is really working!</p>
     <button
       className={btnClass}
-      onClick={props.clicked}>Toggle Persons</button>
+        onClick={props.clicked}>Toggle Persons</button>
+    <button
+      onClick={props.login}>Log in</button>
   </>      
 )}
 
-export default cockpit
+export default React.memo(cockpit)
